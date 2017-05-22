@@ -1,0 +1,58 @@
+import model
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.interpolate import interp1d
+import seaborn as sns
+
+veg_types = ["Bracken", "Scrub", "Shrub", "Young Forest", "Old Forest"]
+colors = ['yellow','goldenrod', 'saddlebrown', 'palegreen', 'forestgreen']
+sns.set_style("whitegrid", {'axes.grid': False})
+
+def line_graph_all_veg_types(model_run_years, model_data):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.set_xticks(range(0, model_run_years), 1)
+    ax.grid(False)
+    for i in model_data:
+        ax.plot(model_data[i], label=veg_types[i], color=colors[i])
+
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=5, frameon=True)
+    plt.savefig('graphs/single_model_runs/model_run_no_dist_01.png')
+    plt.show()
+
+def save_dataframe_csv(data_frame):
+    data_frame.to_csv('graphs/single_model_runs/model_run_no_dist_01_raw.csv')
+
+#create instance of model
+model = model.PaleoFire(800,800,"GreatBarrier", True)
+
+#set time to run model
+model_run_years = 20
+
+#run model, collect outputs and save dataframe
+model.run_model(model_run_years)
+model_data = model.datacollector.get_model_vars_dataframe()
+save_dataframe_csv(model_data)
+
+
+
+line_graph_all_veg_types(model_run_years, model_data)
+save_dataframe_csv(model_data)
+
+'''
+Potential way to do multiple model runs
+import pandas as pd
+import numpy as np
+
+dfs = {}
+nrows = 4
+ncols = 3
+for i in range(4):
+    dfs[i] = pd.DataFrame(np.arange(i, nrows*ncols+i).reshape(nrows, ncols),
+                          columns=list('abc'))
+    print('DF{i}:\n{df}\n'.format(i=i, df=dfs[i]))
+
+panel = pd.Panel(dfs)
+print('Mean of stacked DFs:\n{df}'.format(df=panel.mean(axis=0)))
+'''

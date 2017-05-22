@@ -1,0 +1,11 @@
+landscape_type,functional_type,pollen_loading,percentage_of_type,flamability_probs,succession_time_min,succession_time_max
+4,type1,1000,50,0.2401,20,40
+4,type2,1000,50,0.2401,20,40
+3,type3,1000,50,0.343,20,40
+3,type4,1000,50,0.343,20,40
+2,type5,1000,50,0.49,10,20
+2,type6,1000,50,0.49,10,20
+1,type7,1000,50,0.7,10,20
+1,type8,1000,50,0.7,10,20
+0,type9,1000,50,1,5,15
+0,type10,1000,50,1,5,15
